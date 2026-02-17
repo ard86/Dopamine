@@ -7,16 +7,9 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Ocean gradient background
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.04, green: 0.10, blue: 0.17),
-                        Color(red: 0.03, green: 0.14, blue: 0.22)
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
+                // Beige background
+                Color(red: 0.937, green: 0.906, blue: 0.827)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 24) {
@@ -37,12 +30,12 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.title2)
-                            .foregroundStyle(Color(red: 0.28, green: 0.79, blue: 0.89))
+                            .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2))
                     }
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
-                        .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.8))
+                        .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
                 }
             }
             .sheet(isPresented: $showingAddSheet) {
@@ -61,11 +54,11 @@ struct ContentView: View {
         VStack(spacing: 6) {
             Text(greeting)
                 .font(.system(size: 20, weight: .medium, design: .serif))
-                .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.6))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.5))
 
             Text("Morning Routine")
                 .font(.system(size: 36, weight: .heavy, design: .serif))
-                .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, 8)
@@ -90,7 +83,7 @@ struct ContentView: View {
 
             Text("\(vm.completedCount) of \(vm.totalCount) complete")
                 .font(.system(size: 15, weight: .medium, design: .serif))
-                .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.5))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.45))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)

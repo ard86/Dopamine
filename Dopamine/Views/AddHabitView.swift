@@ -14,7 +14,7 @@ struct AddHabitView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.04, green: 0.10, blue: 0.17)
+                Color(red: 0.937, green: 0.906, blue: 0.827)
                     .ignoresSafeArea()
 
                 Form {
@@ -41,7 +41,7 @@ struct AddHabitView: View {
                                     .padding(8)
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(emoji == e ? Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.3) : Color.clear)
+                                            .fill(emoji == e ? Color(red: 1.0, green: 0.369, blue: 0.2).opacity(0.2) : Color.clear)
                                     )
                                     .onTapGesture {
                                         emoji = e

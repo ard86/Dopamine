@@ -87,25 +87,25 @@ struct DopamineWidgetMediumView: View {
             HStack {
                 Text("Morning Routine")
                     .font(.system(size: 17, weight: .heavy, design: .serif))
-                    .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
+                    .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
                 Spacer()
                 Text("\(entry.completedCount)/\(entry.habits.count)")
                     .font(.system(size: 15, weight: .bold, design: .serif))
-                    .foregroundStyle(Color(red: 0.28, green: 0.79, blue: 0.89))
+                    .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2))
             }
 
             // Progress bar
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.15))
+                        .fill(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.1))
                         .frame(height: 6)
                     Capsule()
                         .fill(
                             LinearGradient(
                                 colors: [
-                                    Color(red: 0.96, green: 0.52, blue: 0.37),
-                                    Color(red: 0.28, green: 0.79, blue: 0.89)
+                                    Color(red: 1.0, green: 0.369, blue: 0.2),
+                                    Color(red: 0.718, green: 0.812, blue: 0.31)
                                 ],
                                 startPoint: .leading,
                                 endPoint: .trailing
@@ -123,7 +123,7 @@ struct DopamineWidgetMediumView: View {
                     // Toggle button (interactive via AppIntent)
                     Button(intent: ToggleHabitIntent(habitID: habit.id.uuidString)) {
                         Image(systemName: isDone ? "checkmark.circle.fill" : "circle")
-                            .foregroundStyle(isDone ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.35))
+                            .foregroundStyle(isDone ? Color(red: 0.718, green: 0.812, blue: 0.31) : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.25))
                             .font(.body)
                     }
                     .buttonStyle(.plain)
@@ -133,7 +133,7 @@ struct DopamineWidgetMediumView: View {
 
                     Text(habit.name)
                         .font(.system(size: 15, weight: .semibold, design: .serif))
-                        .foregroundStyle(isDone ? Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.45) : Color(red: 1.0, green: 0.96, blue: 0.90))
+                        .foregroundStyle(isDone ? Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.35) : Color(red: 0.102, green: 0.0, blue: 0.537))
                         .strikethrough(isDone)
 
                     Spacer()
@@ -142,21 +142,14 @@ struct DopamineWidgetMediumView: View {
                     Link(destination: URL(string: "dopamine://open?scheme=\(habit.appURLScheme.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&fallback=\(habit.fallbackURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!) {
                         Image(systemName: "arrow.up.right.square")
                             .font(.callout)
-                            .foregroundStyle(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.5))
+                            .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2).opacity(0.5))
                     }
                 }
             }
         }
         .padding(16)
         .containerBackground(for: .widget) {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.04, green: 0.10, blue: 0.17),
-                    Color(red: 0.03, green: 0.14, blue: 0.22)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
+            Color(red: 0.937, green: 0.906, blue: 0.827)
         }
     }
 }
@@ -173,23 +166,23 @@ struct DopamineWidgetLargeView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(greeting)
                         .font(.system(size: 15, weight: .medium, design: .serif))
-                        .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.55))
+                        .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.45))
                     Text("Morning Routine")
                         .font(.system(size: 22, weight: .heavy, design: .serif))
-                        .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
+                        .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
                 }
                 Spacer()
                 // Mini progress ring
                 ZStack {
                     Circle()
-                        .stroke(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.12), lineWidth: 5)
+                        .stroke(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.1), lineWidth: 5)
                     Circle()
                         .trim(from: 0, to: entry.progress)
                         .stroke(
                             LinearGradient(
                                 colors: [
-                                    Color(red: 0.96, green: 0.52, blue: 0.37),
-                                    Color(red: 0.28, green: 0.79, blue: 0.89)
+                                    Color(red: 1.0, green: 0.369, blue: 0.2),
+                                    Color(red: 0.718, green: 0.812, blue: 0.31)
                                 ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -199,13 +192,13 @@ struct DopamineWidgetLargeView: View {
                         .rotationEffect(.degrees(-90))
                     Text("\(Int(entry.progress * 100))%")
                         .font(.system(size: 14, weight: .heavy, design: .serif))
-                        .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
+                        .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
                 }
                 .frame(width: 48, height: 48)
             }
 
             Divider()
-                .background(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.15))
+                .background(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.1))
 
             // All habits
             ForEach(entry.habits) { habit in
@@ -213,7 +206,7 @@ struct DopamineWidgetLargeView: View {
                 HStack(spacing: 12) {
                     Button(intent: ToggleHabitIntent(habitID: habit.id.uuidString)) {
                         Image(systemName: isDone ? "checkmark.circle.fill" : "circle")
-                            .foregroundStyle(isDone ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.3))
+                            .foregroundStyle(isDone ? Color(red: 0.718, green: 0.812, blue: 0.31) : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.2))
                             .font(.title3)
                     }
                     .buttonStyle(.plain)
@@ -224,11 +217,11 @@ struct DopamineWidgetLargeView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(habit.name)
                             .font(.system(size: 16, weight: .semibold, design: .serif))
-                            .foregroundStyle(isDone ? Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.4) : Color(red: 1.0, green: 0.96, blue: 0.90))
+                            .foregroundStyle(isDone ? Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.35) : Color(red: 0.102, green: 0.0, blue: 0.537))
                             .strikethrough(isDone)
                         Text(isDone ? "Done" : "Tap circle to check off")
                             .font(.system(size: 11, weight: .medium, design: .serif))
-                            .foregroundStyle(isDone ? Color(red: 0.91, green: 0.76, blue: 0.44).opacity(0.7) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.3))
+                            .foregroundStyle(isDone ? Color(red: 0.718, green: 0.812, blue: 0.31) : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.3))
                     }
 
                     Spacer()
@@ -240,11 +233,11 @@ struct DopamineWidgetLargeView: View {
                             Image(systemName: "arrow.up.right")
                                 .font(.caption2)
                         }
-                        .foregroundStyle(Color(red: 0.28, green: 0.79, blue: 0.89))
+                        .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
                         .background(
-                            Capsule().fill(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.12))
+                            Capsule().fill(Color(red: 1.0, green: 0.369, blue: 0.2).opacity(0.1))
                         )
                     }
                 }
@@ -257,21 +250,14 @@ struct DopamineWidgetLargeView: View {
                     Spacer()
                     Text("All done! Great start to your day")
                         .font(.system(size: 15, weight: .semibold, design: .serif))
-                        .foregroundStyle(Color(red: 0.91, green: 0.76, blue: 0.44))
+                        .foregroundStyle(Color(red: 0.718, green: 0.812, blue: 0.31))
                     Spacer()
                 }
             }
         }
         .padding(16)
         .containerBackground(for: .widget) {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.04, green: 0.10, blue: 0.17),
-                    Color(red: 0.03, green: 0.14, blue: 0.22)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
+            Color(red: 0.937, green: 0.906, blue: 0.827)
         }
     }
 

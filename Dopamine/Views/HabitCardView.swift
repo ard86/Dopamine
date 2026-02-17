@@ -16,18 +16,18 @@ struct HabitCardView: View {
                 .frame(width: 52, height: 52)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.12))
+                        .fill(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.07))
                 )
 
             // Name and status
             VStack(alignment: .leading, spacing: 4) {
                 Text(habit.name)
                     .font(.system(size: 17, weight: .bold, design: .serif))
-                    .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
+                    .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
 
                 Text(isCompleted ? "Done" : "Tap to open")
                     .font(.system(size: 12, weight: .medium, design: .serif))
-                    .foregroundStyle(isCompleted ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.4))
+                    .foregroundStyle(isCompleted ? Color(red: 0.718, green: 0.812, blue: 0.31) : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.35))
             }
 
             Spacer()
@@ -40,21 +40,21 @@ struct HabitCardView: View {
             } label: {
                 Image(systemName: isCompleted ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
-                    .foregroundStyle(isCompleted ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.25))
+                    .foregroundStyle(isCompleted ? Color(red: 0.718, green: 0.812, blue: 0.31) : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.2))
             }
             .buttonStyle(.plain)
         }
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color(red: 0.06, green: 0.16, blue: 0.24).opacity(0.8))
+                .fill(Color.white.opacity(0.6))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .stroke(
                     isCompleted
-                        ? Color(red: 0.91, green: 0.76, blue: 0.44).opacity(0.3)
-                        : Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.1),
+                        ? Color(red: 0.718, green: 0.812, blue: 0.31).opacity(0.4)
+                        : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.08),
                     lineWidth: 1
                 )
         )
@@ -67,7 +67,7 @@ struct HabitCardView: View {
 
 #Preview {
     ZStack {
-        Color.black
+        Color(red: 0.937, green: 0.906, blue: 0.827)
         VStack {
             HabitCardView(habit: Habit.defaults[0])
             HabitCardView(habit: Habit.defaults[1])
