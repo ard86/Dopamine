@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - App Group identifier for sharing data between app and widget
-let appGroupIdentifier = "group.com.dopamine.habits"
+let appGroupIdentifier = "group.com.annierdudu.dopamine.habits"
 
 // MARK: - Habit Definition
 
