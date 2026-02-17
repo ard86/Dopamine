@@ -16,18 +16,18 @@ struct HabitCardView: View {
                 .frame(width: 52, height: 52)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(Color.white.opacity(0.08))
+                        .fill(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.12))
                 )
 
             // Name and status
             VStack(alignment: .leading, spacing: 4) {
                 Text(habit.name)
-                    .font(.headline)
-                    .foregroundStyle(.white)
+                    .font(.system(size: 17, weight: .bold, design: .serif))
+                    .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
 
                 Text(isCompleted ? "Done" : "Tap to open")
-                    .font(.caption)
-                    .foregroundStyle(isCompleted ? .green : .white.opacity(0.4))
+                    .font(.system(size: 12, weight: .medium, design: .serif))
+                    .foregroundStyle(isCompleted ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.4))
             }
 
             Spacer()
@@ -40,22 +40,21 @@ struct HabitCardView: View {
             } label: {
                 Image(systemName: isCompleted ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
-                    .foregroundStyle(isCompleted ? .green : .white.opacity(0.3))
+                    .foregroundStyle(isCompleted ? Color(red: 0.91, green: 0.76, blue: 0.44) : Color(red: 1.0, green: 0.96, blue: 0.90).opacity(0.25))
             }
             .buttonStyle(.plain)
         }
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
-                .environment(\.colorScheme, .dark)
+                .fill(Color(red: 0.06, green: 0.16, blue: 0.24).opacity(0.8))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .stroke(
                     isCompleted
-                        ? Color.green.opacity(0.3)
-                        : Color.white.opacity(0.06),
+                        ? Color(red: 0.91, green: 0.76, blue: 0.44).opacity(0.3)
+                        : Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.1),
                     lineWidth: 1
                 )
         )

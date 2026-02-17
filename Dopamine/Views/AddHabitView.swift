@@ -14,7 +14,7 @@ struct AddHabitView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.07, green: 0.07, blue: 0.15)
+                Color(red: 0.04, green: 0.10, blue: 0.17)
                     .ignoresSafeArea()
 
                 Form {
@@ -30,6 +30,7 @@ struct AddHabitView: View {
                             .autocorrectionDisabled()
                     } header: {
                         Text("Details")
+                            .font(.system(size: 13, weight: .bold, design: .serif))
                     }
 
                     Section {
@@ -40,7 +41,7 @@ struct AddHabitView: View {
                                     .padding(8)
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(emoji == e ? Color.blue.opacity(0.3) : Color.clear)
+                                            .fill(emoji == e ? Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.3) : Color.clear)
                                     )
                                     .onTapGesture {
                                         emoji = e
@@ -49,6 +50,7 @@ struct AddHabitView: View {
                         }
                     } header: {
                         Text("Icon")
+                            .font(.system(size: 13, weight: .bold, design: .serif))
                     }
 
                     Section {
@@ -60,6 +62,7 @@ struct AddHabitView: View {
                         presetButton(name: "Fitness", emoji: "💪", scheme: "fitnessapp://", fallback: "")
                     } header: {
                         Text("Quick Presets")
+                            .font(.system(size: 13, weight: .bold, design: .serif))
                     }
                 }
                 .scrollContentBackground(.hidden)

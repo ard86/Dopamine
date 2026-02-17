@@ -5,16 +5,22 @@ struct ProgressRingView: View {
 
     var body: some View {
         ZStack {
-            // Background ring
+            // Background ring — ocean teal tint
             Circle()
-                .stroke(Color.white.opacity(0.1), lineWidth: 10)
+                .stroke(Color(red: 0.28, green: 0.79, blue: 0.89).opacity(0.12), lineWidth: 10)
 
-            // Progress arc
+            // Progress arc — sunset coral-to-gold gradient
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(
                     AngularGradient(
-                        colors: [.purple, .blue, .cyan, .blue, .purple],
+                        colors: [
+                            Color(red: 0.96, green: 0.52, blue: 0.37),
+                            Color(red: 0.98, green: 0.65, blue: 0.32),
+                            Color(red: 0.91, green: 0.76, blue: 0.44),
+                            Color(red: 0.28, green: 0.79, blue: 0.89),
+                            Color(red: 0.96, green: 0.52, blue: 0.37)
+                        ],
                         center: .center
                     ),
                     style: StrokeStyle(lineWidth: 10, lineCap: .round)
@@ -25,8 +31,8 @@ struct ProgressRingView: View {
             // Percentage text
             VStack(spacing: 2) {
                 Text("\(Int(progress * 100))%")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 28, weight: .heavy, design: .serif))
+                    .foregroundStyle(Color(red: 1.0, green: 0.96, blue: 0.90))
                     .contentTransition(.numericText())
                     .animation(.spring(response: 0.4), value: progress)
             }
