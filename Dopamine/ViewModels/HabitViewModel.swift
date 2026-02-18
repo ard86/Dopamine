@@ -5,6 +5,7 @@ final class HabitViewModel: ObservableObject {
     @Published var habits: [Habit] = []
     @Published var completedIDs: Set<UUID> = []
     @Published var streaks: StreakInfo = StreakInfo(daily: 0, weekly: 0, monthly: 0)
+    @Published var wellnessDays: Set<String> = []
 
     private let store = HabitStore.shared
 
@@ -16,6 +17,12 @@ final class HabitViewModel: ObservableObject {
         habits = store.loadHabits()
         completedIDs = store.loadTodayLog().completedHabitIDs
         streaks = store.calculateStreaks()
+        wellnessDays = store.loadWellnessDays()
+    }
+
+    func toggleWellnessDay(_ dateString: String) {
+        store.toggleWellnessDay(dateString)
+        wellnessDays = store.loadWellnessDays()
     }
 
     var completedCount: Int {

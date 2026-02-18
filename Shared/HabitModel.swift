@@ -153,6 +153,33 @@ final class HabitStore {
         loadHabits().count
     }
 
+    // MARK: - Wellness Goal Days
+
+    private let wellnessKey = "wellness_days_v1"
+
+    func loadWellnessDays() -> Set<String> {
+        guard let data = defaults.data(forKey: wellnessKey),
+              let days = try? JSONDecoder().decode(Set<String>.self, from: data)
+        else { return [] }
+        return days
+    }
+
+    func saveWellnessDays(_ days: Set<String>) {
+        if let data = try? JSONEncoder().encode(days) {
+            defaults.set(data, forKey: wellnessKey)
+        }
+    }
+
+    func toggleWellnessDay(_ dateString: String) {
+        var days = loadWellnessDays()
+        if days.contains(dateString) {
+            days.remove(dateString)
+        } else {
+            days.insert(dateString)
+        }
+        saveWellnessDays(days)
+    }
+
     // MARK: - History & Streaks
 
     func loadHistory() -> [DailyLog] {
