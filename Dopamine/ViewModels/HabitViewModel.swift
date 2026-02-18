@@ -4,6 +4,7 @@ import WidgetKit
 final class HabitViewModel: ObservableObject {
     @Published var habits: [Habit] = []
     @Published var completedIDs: Set<UUID> = []
+    @Published var streaks: StreakInfo = StreakInfo(daily: 0, weekly: 0, monthly: 0)
 
     private let store = HabitStore.shared
 
@@ -14,6 +15,7 @@ final class HabitViewModel: ObservableObject {
     func reload() {
         habits = store.loadHabits()
         completedIDs = store.loadTodayLog().completedHabitIDs
+        streaks = store.calculateStreaks()
     }
 
     var completedCount: Int {
@@ -61,6 +63,18 @@ final class HabitViewModel: ObservableObject {
         )
         var all = habits
         all.append(habit)
+        store.save(habits: all)
+        reload()
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    func updateHabit(_ habit: Habit, name: String, emoji: String, appScheme: String, fallbackURL: String) {
+        var all = habits
+        guard let idx = all.firstIndex(where: { $0.id == habit.id }) else { return }
+        all[idx].name = name
+        all[idx].emoji = emoji
+        all[idx].appURLScheme = appScheme
+        all[idx].fallbackURL = fallbackURL
         store.save(habits: all)
         reload()
         WidgetCenter.shared.reloadAllTimelines()

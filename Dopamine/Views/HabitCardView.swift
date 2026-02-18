@@ -3,6 +3,7 @@ import SwiftUI
 struct HabitCardView: View {
     @EnvironmentObject var vm: HabitViewModel
     let habit: Habit
+    @State private var showingEdit = false
 
     private var isCompleted: Bool {
         vm.completedIDs.contains(habit.id)
@@ -61,6 +62,13 @@ struct HabitCardView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             vm.openApp(for: habit)
+        }
+        .onLongPressGesture {
+            showingEdit = true
+        }
+        .sheet(isPresented: $showingEdit) {
+            EditHabitView(habit: habit)
+                .environmentObject(vm)
         }
     }
 }

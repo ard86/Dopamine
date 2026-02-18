@@ -6,21 +6,23 @@ import AppIntents
 
 struct HabitTimelineProvider: TimelineProvider {
     func placeholder(in context: Context) -> HabitEntry {
-        HabitEntry(date: Date(), habits: Habit.defaults, completedIDs: [])
+        HabitEntry(date: Date(), habits: Habit.defaults, completedIDs: [], streaks: StreakInfo(daily: 0, weekly: 0, monthly: 0))
     }
 
     func getSnapshot(in context: Context, completion: @escaping (HabitEntry) -> Void) {
         let store = HabitStore.shared
         let habits = store.loadHabits()
         let log = store.loadTodayLog()
-        completion(HabitEntry(date: Date(), habits: habits, completedIDs: log.completedHabitIDs))
+        let streaks = store.calculateStreaks()
+        completion(HabitEntry(date: Date(), habits: habits, completedIDs: log.completedHabitIDs, streaks: streaks))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<HabitEntry>) -> Void) {
         let store = HabitStore.shared
         let habits = store.loadHabits()
         let log = store.loadTodayLog()
-        let entry = HabitEntry(date: Date(), habits: habits, completedIDs: log.completedHabitIDs)
+        let streaks = store.calculateStreaks()
+        let entry = HabitEntry(date: Date(), habits: habits, completedIDs: log.completedHabitIDs, streaks: streaks)
 
         // Refresh at midnight so the checklist resets
         let calendar = Calendar.current
@@ -36,6 +38,7 @@ struct HabitEntry: TimelineEntry {
     let date: Date
     let habits: [Habit]
     let completedIDs: Set<UUID>
+    let streaks: StreakInfo
 
     var completedCount: Int {
         habits.filter { completedIDs.contains($0.id) }.count
@@ -254,11 +257,39 @@ struct DopamineWidgetLargeView: View {
                     Spacer()
                 }
             }
+
+            // Streak row
+            if entry.streaks.daily > 0 || entry.streaks.weekly > 0 || entry.streaks.monthly > 0 {
+                Divider()
+                    .background(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.1))
+                HStack(spacing: 0) {
+                    widgetStreakItem(value: entry.streaks.daily, label: "Day", icon: "flame.fill")
+                    widgetStreakItem(value: entry.streaks.weekly, label: "Week", icon: "calendar")
+                    widgetStreakItem(value: entry.streaks.monthly, label: "Month", icon: "star.fill")
+                }
+            }
         }
         .padding(16)
         .containerBackground(for: .widget) {
             Color(red: 0.937, green: 0.906, blue: 0.827)
         }
+    }
+
+    private func widgetStreakItem(value: Int, label: String, icon: String) -> some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 10))
+                .foregroundStyle(value > 0
+                    ? Color(red: 1.0, green: 0.369, blue: 0.2)
+                    : Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.2))
+            Text("\(value)")
+                .font(.system(size: 13, weight: .heavy, design: .serif))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
+            Text(label)
+                .font(.system(size: 10, weight: .medium, design: .serif))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.4))
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private var greeting: String {
