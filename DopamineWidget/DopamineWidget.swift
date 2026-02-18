@@ -335,6 +335,200 @@ struct DopamineLockScreenWidget: Widget {
     }
 }
 
+// MARK: - Wellness Goals Widget
+
+struct WellnessEntry: TimelineEntry {
+    let date: Date
+    let daysRemaining: Int
+}
+
+struct WellnessTimelineProvider: TimelineProvider {
+    private static let goalDate: Date = {
+        var components = DateComponents()
+        components.year = 2026
+        components.month = 5
+        components.day = 16
+        return Calendar.current.startOfDay(for: Calendar.current.date(from: components)!)
+    }()
+
+    func placeholder(in context: Context) -> WellnessEntry {
+        WellnessEntry(date: Date(), daysRemaining: 87)
+    }
+
+    func getSnapshot(in context: Context, completion: @escaping (WellnessEntry) -> Void) {
+        completion(makeEntry())
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<WellnessEntry>) -> Void) {
+        let entry = makeEntry()
+        let calendar = Calendar.current
+        let tomorrow = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: Date())!)
+        completion(Timeline(entries: [entry], policy: .after(tomorrow)))
+    }
+
+    private func makeEntry() -> WellnessEntry {
+        let today = Calendar.current.startOfDay(for: Date())
+        let days = max(0, Calendar.current.dateComponents([.day], from: today, to: Self.goalDate).day ?? 0)
+        return WellnessEntry(date: Date(), daysRemaining: days)
+    }
+}
+
+struct WellnessWidgetMediumView: View {
+    let entry: WellnessEntry
+
+    private let deepPurple = Color(red: 0.102, green: 0.0, blue: 0.537)
+    private let orange = Color(red: 1.0, green: 0.369, blue: 0.2)
+    private let green = Color(red: 0.718, green: 0.812, blue: 0.31)
+
+    private let rules: [(emoji: String, text: String)] = [
+        ("🚫", "No added sugar"),
+        ("🍽️", "400 cal dinners, chew 30 min. 600 cal on heavy active days. No cheat meals."),
+        ("📝", "Track first. Drink water. Enjoy food last. Track every meal before eating."),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            // Header
+            HStack {
+                Text("Wellness Rules")
+                    .font(.system(size: 17, weight: .heavy, design: .serif))
+                    .foregroundStyle(deepPurple)
+                Spacer()
+                VStack(alignment: .trailing, spacing: 1) {
+                    Text("\(entry.daysRemaining)")
+                        .font(.system(size: 20, weight: .heavy, design: .serif))
+                        .foregroundStyle(orange)
+                    Text("days to 21")
+                        .font(.system(size: 9, weight: .semibold, design: .serif))
+                        .foregroundStyle(deepPurple.opacity(0.4))
+                }
+            }
+
+            ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
+                HStack(alignment: .top, spacing: 8) {
+                    Text(rule.emoji)
+                        .font(.system(size: 13))
+                    Text(rule.text)
+                        .font(.system(size: 12, weight: .semibold, design: .serif))
+                        .foregroundStyle(deepPurple)
+                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .padding(16)
+        .containerBackground(for: .widget) {
+            Color(red: 0.937, green: 0.906, blue: 0.827)
+        }
+    }
+}
+
+struct WellnessWidgetLargeView: View {
+    let entry: WellnessEntry
+
+    private let deepPurple = Color(red: 0.102, green: 0.0, blue: 0.537)
+    private let orange = Color(red: 1.0, green: 0.369, blue: 0.2)
+    private let green = Color(red: 0.718, green: 0.812, blue: 0.31)
+
+    private let rules: [(emoji: String, title: String, detail: String)] = [
+        ("🚫", "No added sugar", "Zero tolerance. Read labels. No exceptions until May 16th."),
+        ("🍽️", "400 calorie dinners", "Chew for 30 minutes. Only 600 cal on heavy active days. No cheat meals."),
+        ("📝", "Track first, water, then eat", "Log every meal's calories before you take a single bite. Drink water. Then enjoy."),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Wellness Rules")
+                        .font(.system(size: 22, weight: .heavy, design: .serif))
+                        .foregroundStyle(deepPurple)
+                    Text("Until May 16 · 21st birthday")
+                        .font(.system(size: 13, weight: .medium, design: .serif))
+                        .foregroundStyle(deepPurple.opacity(0.4))
+                }
+                Spacer()
+                VStack(spacing: 2) {
+                    Text("\(entry.daysRemaining)")
+                        .font(.system(size: 28, weight: .heavy, design: .serif))
+                        .foregroundStyle(orange)
+                    Text("days left")
+                        .font(.system(size: 10, weight: .semibold, design: .serif))
+                        .foregroundStyle(deepPurple.opacity(0.4))
+                }
+            }
+
+            Divider()
+                .background(deepPurple.opacity(0.1))
+
+            ForEach(Array(rules.enumerated()), id: \.offset) { i, rule in
+                HStack(alignment: .top, spacing: 12) {
+                    Text(rule.emoji)
+                        .font(.system(size: 22))
+                        .frame(width: 36, height: 36)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(deepPurple.opacity(0.06))
+                        )
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(rule.title)
+                            .font(.system(size: 15, weight: .bold, design: .serif))
+                            .foregroundStyle(deepPurple)
+                        Text(rule.detail)
+                            .font(.system(size: 12, weight: .medium, design: .serif))
+                            .foregroundStyle(deepPurple.opacity(0.5))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding(.vertical, 2)
+            }
+
+            Spacer(minLength: 0)
+
+            HStack {
+                Spacer()
+                Text("You got this. Every meal counts.")
+                    .font(.system(size: 12, weight: .semibold, design: .serif))
+                    .foregroundStyle(green)
+                Spacer()
+            }
+        }
+        .padding(16)
+        .containerBackground(for: .widget) {
+            Color(red: 0.937, green: 0.906, blue: 0.827)
+        }
+    }
+}
+
+struct WellnessWidgetSwitcher: View {
+    @Environment(\.widgetFamily) var family
+    let entry: WellnessEntry
+
+    var body: some View {
+        switch family {
+        case .systemLarge:
+            WellnessWidgetLargeView(entry: entry)
+        default:
+            WellnessWidgetMediumView(entry: entry)
+        }
+    }
+}
+
+struct DopamineWellnessWidget: Widget {
+    let kind: String = "DopamineWellnessWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: WellnessTimelineProvider()) { entry in
+            WellnessWidgetSwitcher(entry: entry)
+        }
+        .configurationDisplayName("Wellness Rules")
+        .description("Your nutrition rules and countdown to May 16th.")
+        .supportedFamilies([.systemMedium, .systemLarge])
+    }
+}
+
 // MARK: - Widget Bundle
 
 @main
@@ -342,5 +536,6 @@ struct DopamineWidgetBundle: WidgetBundle {
     var body: some Widget {
         DopamineWidget()
         DopamineLockScreenWidget()
+        DopamineWellnessWidget()
     }
 }
