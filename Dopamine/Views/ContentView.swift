@@ -133,6 +133,22 @@ struct ContentView: View {
                     .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2))
             }
 
+            // Food goals list
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Until May 16th, Annie's 21st birthday:")
+                    .font(.system(size: 12, weight: .bold, design: .serif))
+                    .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("1. No added sugar")
+                    Text("2. 400 calorie dinners, chewing for 30min; except 600 calories on active active active day. No cheat meals.")
+                    Text("3. Track first, drink water then, enjoy food last. Track every meal's calories before eating.")
+                }
+                .font(.system(size: 11, weight: .medium, design: .serif))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.6))
+            }
+            .padding(.vertical, 6)
+
             // Weekday headers
             let weekdays = ["S", "M", "T", "W", "T", "F", "S"]
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7), spacing: 4) {
