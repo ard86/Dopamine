@@ -141,7 +141,7 @@ struct ContentView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("1. No added sugar")
-                    Text("2. 400 calorie dinners, chewing for 30min; except 600 calories on active active active day. No cheat meals.")
+                    Text("2. <500 calorie dinners, chewing for 30min; except 600 calories on active active active day. No cheat meals.")
                     Text("3. Track first, drink water then, enjoy food last. Track every meal's calories before eating.")
                 }
                 .font(.system(size: 11, weight: .medium, design: .serif))
