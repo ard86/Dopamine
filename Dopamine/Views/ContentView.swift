@@ -141,8 +141,8 @@ struct ContentView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("1. No added sugar")
-                    Text("2. Eat only what you planned. No cheat meals.")
-                    Text("3. Track first, drink water then, enjoy food last. Track every meal's calories before eating.")
+                    Text("2. Eat only what's on your plate. No second servings.")
+                    Text("3. 1 Track, 2 Plate, 3 Drink, LASTLY enjoy food.")
                 }
                 .font(.system(size: 11, weight: .medium, design: .serif))
                 .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.6))
