@@ -382,7 +382,7 @@ struct WellnessWidgetMediumView: View {
 
     private let rules: [(emoji: String, text: String)] = [
         ("🚫", "No added sugar"),
-        ("🍽️", "400 cal dinners, chew 30 min. 600 cal on heavy active days. No cheat meals."),
+        ("🍽️", "Eat only what you planned. No cheat meals."),
         ("📝", "Track first. Drink water. Enjoy food last. Track every meal before eating."),
     ]
 
@@ -432,7 +432,7 @@ struct WellnessWidgetLargeView: View {
 
     private let rules: [(emoji: String, title: String, detail: String)] = [
         ("🚫", "No added sugar", "Zero tolerance. Read labels. No exceptions until May 16th."),
-        ("🍽️", "400 calorie dinners", "Chew for 30 minutes. Only 600 cal on heavy active days. No cheat meals."),
+        ("🍽️", "Eat only what you planned", "No cheat meals. Stick to the plan. No exceptions."),
         ("📝", "Track first, water, then eat", "Log every meal's calories before you take a single bite. Drink water. Then enjoy."),
     ]
 
