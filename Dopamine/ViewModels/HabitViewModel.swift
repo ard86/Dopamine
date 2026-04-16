@@ -6,6 +6,7 @@ final class HabitViewModel: ObservableObject {
     @Published var completedIDs: Set<UUID> = []
     @Published var streaks: StreakInfo = StreakInfo(daily: 0, weekly: 0, monthly: 0)
     @Published var wellnessDays: Set<String> = []
+    @Published var pillars: [IdentityPillar] = []
 
     private let store = HabitStore.shared
 
@@ -18,6 +19,18 @@ final class HabitViewModel: ObservableObject {
         completedIDs = store.loadTodayLog().completedHabitIDs
         streaks = store.calculateStreaks()
         wellnessDays = store.loadWellnessDays()
+        pillars = store.loadPillars()
+    }
+
+    // MARK: - Identity Pillars
+
+    func updatePillar(_ pillar: IdentityPillar, name: String, emoji: String, identitySentence: String) {
+        var updated = pillar
+        updated.name = name
+        updated.emoji = emoji
+        updated.identitySentence = identitySentence
+        store.updatePillar(updated)
+        reload()
     }
 
     func toggleWellnessDay(_ dateString: String) {

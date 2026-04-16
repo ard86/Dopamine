@@ -49,6 +49,47 @@ struct Habit: Identifiable, Codable, Equatable {
     ]
 }
 
+// MARK: - Identity Pillar
+
+struct IdentityPillar: Identifiable, Codable, Equatable {
+    let id: UUID
+    var name: String
+    var emoji: String
+    var identitySentence: String
+    var sortOrder: Int
+
+    static let defaults: [IdentityPillar] = [
+        IdentityPillar(
+            id: UUID(),
+            name: "Social",
+            emoji: "✨",
+            identitySentence: "I am magnetic because I move slowly, acknowledge people fully, and don't perform for approval.",
+            sortOrder: 0
+        ),
+        IdentityPillar(
+            id: UUID(),
+            name: "Athletic",
+            emoji: "🏃‍♀️",
+            identitySentence: "I am consistent because I train and make aligned choices even when I do not feel perfect.",
+            sortOrder: 1
+        ),
+        IdentityPillar(
+            id: UUID(),
+            name: "Career",
+            emoji: "💻",
+            identitySentence: "I am an engineer who solves problems creatively and keeps sharpening fundamentals.",
+            sortOrder: 2
+        ),
+        IdentityPillar(
+            id: UUID(),
+            name: "Personal growth",
+            emoji: "🌱",
+            identitySentence: "I root for who I naturally am instead of editing myself into someone safer.",
+            sortOrder: 3
+        ),
+    ]
+}
+
 // MARK: - Daily completion record
 
 struct DailyLog: Codable {
@@ -74,6 +115,7 @@ final class HabitStore {
     private let habitsKey = "habits_v1"
     private let logKey = "daily_log_v1"
     private let historyKey = "log_history_v1"
+    private let pillarsKey = "pillars_v1"
 
     private let dateFormatter: DateFormatter = {
         let fmt = DateFormatter()
@@ -85,6 +127,9 @@ final class HabitStore {
         self.defaults = UserDefaults(suiteName: appGroupIdentifier) ?? .standard
         if loadHabits().isEmpty {
             save(habits: Habit.defaults)
+        }
+        if loadPillars().isEmpty {
+            savePillars(IdentityPillar.defaults)
         }
     }
 
@@ -101,6 +146,28 @@ final class HabitStore {
         if let data = try? JSONEncoder().encode(habits) {
             defaults.set(data, forKey: habitsKey)
         }
+    }
+
+    // MARK: Identity Pillars
+
+    func loadPillars() -> [IdentityPillar] {
+        guard let data = defaults.data(forKey: pillarsKey),
+              let pillars = try? JSONDecoder().decode([IdentityPillar].self, from: data)
+        else { return [] }
+        return pillars.sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    func savePillars(_ pillars: [IdentityPillar]) {
+        if let data = try? JSONEncoder().encode(pillars) {
+            defaults.set(data, forKey: pillarsKey)
+        }
+    }
+
+    func updatePillar(_ pillar: IdentityPillar) {
+        var all = loadPillars()
+        guard let idx = all.firstIndex(where: { $0.id == pillar.id }) else { return }
+        all[idx] = pillar
+        savePillars(all)
     }
 
     // MARK: Daily Log

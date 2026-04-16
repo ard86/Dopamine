@@ -14,6 +14,7 @@ struct ContentView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         headerSection
+                        IdentityPillarsSection()
                         wellnessCalendarSection
                         progressSection
                         streakSection
@@ -53,14 +54,22 @@ struct ContentView: View {
     // MARK: - Header
 
     private var headerSection: some View {
-        VStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(greeting)
-                .font(.system(size: 20, weight: .medium, design: .serif))
+                .font(.system(size: 16, weight: .medium, design: .serif))
                 .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.5))
 
-            Text("Morning Routine")
-                .font(.system(size: 36, weight: .heavy, design: .serif))
+            Text("Who are you")
+                .font(.system(size: 34, weight: .heavy, design: .serif))
                 .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537))
+            Text("becoming today?")
+                .font(.system(size: 34, weight: .heavy, design: .serif))
+                .foregroundStyle(Color(red: 1.0, green: 0.369, blue: 0.2))
+
+            Text("Did you become more yourself today?")
+                .font(.system(size: 13, weight: .medium, design: .serif))
+                .foregroundStyle(Color(red: 0.102, green: 0.0, blue: 0.537).opacity(0.5))
+                .padding(.top, 4)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, 8)
